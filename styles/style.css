@@ -1,0 +1,54 @@
+/* :root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --text-color: #333;
+  --background-color: #fff;
+  --font-family: 'Arial', sans-serif;
+  --font-size: 16px;
+} */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Responsive */
+
+/* Mobile-first Breakpoints */
+@media (min-width: 600px) {
+  /* Tablet / Small Desktop */
+}
+
+@media (min-width: 768px) {
+  /* Small screens */
+}
+
+@media (min-width: 1024px) {
+  /* Larger desktop / Tablets in landscape */
+}
+
+@media (min-width: 1280px) {
+  /* Large screens */
+}
