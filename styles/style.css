@@ -23,25 +23,113 @@ body {
   font-family: var(--font-family);
 }
 
-main {
-  margin: 0;
-  padding: 2rem;
-  background: #fefefe;
-}
-
 /* Header */
 header {
+  position: fixed;
+  width: 100%;
+  padding: 20px 28px;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  justify-content: space-between;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(18px);
+  /* -webkit-backdrop-filter: blur(18px); */
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  z-index: 300;
+  /* box-shadow: 0 5px 15px rgba(60, 60, 60, 0.12); */
 }
 
 nav {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
+  position: relative;
+}
+
+nav i {
+  position: absolute;
+  font-size: 1.5rem;
+  cursor: pointer;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.logo {
+  color: #3d3d3d;
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+
+.logo:hover {
+  color: #f7a650;
+}
+
+#btnAddRecipe:active {
+  background-color: #d97c00;
+}
+
+
+#inputSearch {
+  width: 350px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  padding: 12px 0 12px 40px;
+  text-decoration: none;
+}
+
+.filter-select {
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--text-grey);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-select:hover {
+  background-color: #f7f7f7;
+}
+
+#inputSearch::-webkit-search-cancel-button {
+  display: none;
+}
+
+#inputSearch:focus {
+  outline: none;
+  border-color: #ff0000;
+}
+
+#btnAddRecipe {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: #f7a650;
+  transition: background-color 0.3s ease;
+}
+
+#btnAddRecipe:hover {
+  background-color: #ec800c;
+}
+
+
+/* Main Content */
+main {
+  margin: 0;
+  padding: 2rem;
+  background: #fefefe;
+  padding-top: 8%;
 }
 
 /* Recipe Grid */
@@ -123,8 +211,22 @@ nav {
 /* Responsive */
 
 /* Mobile-first Breakpoints */
-@media (min-width: 600px) {
+@media (max-width: 600px) {
   /* Tablet / Small Desktop */
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 14px;
+  }
+  nav {
+    display: none;
+  }
+  #btnAddRecipe {
+    display: none;
+  }
+  main {
+    padding-top: 20%;
+  }
 }
 
 @media (min-width: 768px) {
