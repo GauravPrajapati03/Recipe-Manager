@@ -9,6 +9,29 @@
 </head>
 
 <body>
+    <!-- Header -->
+    <header class="glass-header"    >
+        <h1 class="logo">RecipX</h1>
+        <nav>
+            <input type="search" id="inputSearch" placeholder="Search recipes by title..."
+            aria-label="Search recipes" />
+            <select id="filterDifficulty" class="filter-select" aria-label="Filter recipes by difficulty">
+                <option value="All">Difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            <button id="btnAddRecipe">Add Recipe</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section id="recipeList" class="recipe-grid"></section>
+        <section id="recipeDetail" class="hidden"></section>
+        <section id="recipeForm" class="hidden"></section>
+        <div id="errorContainer" role="alert" class="error-message"></div>
+    </main>
 
     <!-- Scripts -->
     <script src="scripts/main.js" type="module"></script>

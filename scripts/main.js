@@ -1,6 +1,6 @@
 // Entry Point and Event Listeners
 
-import { initializeRecipes } from "./storage.js";
+import { initializeRecipes, getRecipes } from "./storage.js";
 import { renderRecipeList } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {

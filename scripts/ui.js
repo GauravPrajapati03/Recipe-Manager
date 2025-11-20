@@ -23,3 +23,22 @@ export function renderRecipeList(recipes) {
         container.appendChild(card);
     }
 }
+
+function createRecipeCard(recipe) {
+    const card = document.createElement("article");
+    card.className = "recipe-card";
+    card.setAttribute("tabindex", "0");
+
+    card.innerHTML = `
+    <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-card-image" lazy="loading" />
+    <div class="recipe-card-content">
+        <h3 class="recipe-card-title">${recipe.title}</h3>
+        <p class="recipe-card-description">${recipe.description}</p>
+        <p class="recipe-card-info">
+            Difficulty: <span class="difficulty-badge difficulty-${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</span> | Total Time: ${recipe.totalTime} min
+        </p>
+    </div>
+  `;
+
+    return card;
+}
