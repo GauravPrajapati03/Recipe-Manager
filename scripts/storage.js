@@ -65,7 +65,7 @@ export function initializeRecipes() {
                 "cookTime": 25,
                 "totalTime": 37,
                 "difficulty": "Medium",
-                "imageURL": "https://as2.ftcdn.net/v2/jpg/16/37/20/21/1000_F_1637202132_42Cqd3y6LoamOtQ98bTzzxNuYzKFDzgm.jpg",
+                "imageURL": "https://www.simplyrecipes.com/thmb/dAFaT1RsQ_3itLIp_MIyk3MX82o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Matar-Paneer-LEAD-05-c2487ab07101404d8ebfec4fd8582ca2.jpg",
                 "createdAt": new Date().toISOString()
             },
             {

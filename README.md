@@ -46,3 +46,49 @@ recipe-manager/
 ``` 
 
 
+---
+
+## ✅ Recipe Validation Rules
+
+Each recipe must follow these validation requirements:
+
+### 📌 Title
+- **Required**
+- Minimum: **3 characters**
+- Maximum: **~100 characters**
+
+### 📝 Description
+- **Required**
+- Minimum: **10 characters**
+- Maximum: **~500 characters**
+
+### 🥗 Ingredients
+- **Required**
+- Must contain **at least 1 ingredient**
+- Accepted formats:
+  - Comma-separated list  
+  - One ingredient per line
+- Trim whitespace from each ingredient
+
+### 🍳 Steps
+- **Required**
+- Must contain **at least 1 step**
+- Steps entered **one per line**
+- Trim whitespace from each step
+
+### ⏱️ Time Fields (Prep / Cook / Total)
+- **All required**
+- Must be **positive integers**
+
+### 🎚️ Difficulty
+- **Required**
+- Must be one of the valid options:
+  - `Easy`
+  - `Medium`
+  - `Hard`
+
+### 🖼️ Image URL
+- **Optional**
+- If provided:
+  - Must be a **valid URL format**
+  - Cannot be just spaces

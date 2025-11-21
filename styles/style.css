@@ -266,7 +266,7 @@ main {
   box-shadow: 0 8px 30px rgba(0,0,0,0.12);
   width: 720px;
   max-width: 95%;
-  max-height: 70vh;
+  max-height: 75vh;
   overflow-y: auto;
   margin: 0 auto;
   display: flex;
@@ -486,6 +486,16 @@ main {
   background: var(--modal-scroll-thumb-hover);
 }
 
+
+/* Error */
+.input-error {
+  border: 1.5px solid #dc3545 !important;
+}
+.form-error {
+  color: #dc3545;
+  font-size: 0.97em;
+  margin: 3px 0 0 0;
+}
 
 
 /* Responsive */

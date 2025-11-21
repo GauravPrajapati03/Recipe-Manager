@@ -1,5 +1,7 @@
 // UI rendering / manipulation functions
 
+import { validateRecipeForm } from './validation.js';
+
 function clearElement(container) {
   while (container.firstChild) {
     container.removeChild(container.firstChild);
@@ -132,8 +134,14 @@ export function renderAddRecipeForm(onSubmit) {
   // Submit handler
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    function clearErrors() {
+      form.querySelectorAll('.form-error').forEach(n => n.remove());
+      form.querySelectorAll('.input-error').forEach(n => n.classList.remove('input-error'));
+    }
 
-    const formData = ({
+    // Always clear previous errors before validating again
+    clearErrors();
+    const formData = {
       id: Date.now().toString(),
       title: document.getElementById('title').value,
       description: document.getElementById('description').value,
@@ -144,7 +152,24 @@ export function renderAddRecipeForm(onSubmit) {
       totalTime: document.getElementById('totalTime').value,
       difficulty: document.getElementById('difficulty').value,
       imageURL: document.getElementById('imageURL').value
-    });
+    };
+
+    const errors = validateRecipeForm(formData);
+    if (Object.keys(errors).length > 0) {
+      // Show errors inline; highlight fields. Try by id first, then by name.
+      Object.entries(errors).forEach(([field, msg]) => {
+        let el = form.querySelector(`#${field}`) || form.querySelector(`[name="${field}"]`);
+        if (el) {
+          el.classList.add('input-error');
+          let err = document.createElement('div');
+          err.className = 'form-error';
+          err.innerText = msg;
+          // Insert error immediately after the field element
+          if (el.parentNode) el.parentNode.insertBefore(err, el.nextSibling);
+        }
+      });
+      return; // Prevent form submission if errors
+    }
 
     onSubmit(formData);
     // close modal after submit
@@ -314,6 +339,13 @@ export function renderEditRecipeForm(recipe, onsubmit) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
+    // Clear previous errors first
+    function clearEditErrors() {
+      form.querySelectorAll('.form-error').forEach(n => n.remove());
+      form.querySelectorAll('.input-error').forEach(n => n.classList.remove('input-error'));
+    }
+    clearEditErrors();
+
     const formData = new FormData(form);
     const updatedRecipe = {
       ...recipe,
@@ -327,6 +359,22 @@ export function renderEditRecipeForm(recipe, onsubmit) {
       difficulty: formData.get('difficulty'),
       imageURL: formData.get('imageURL')
     };
+
+    // Validate before submitting
+    const errors = validateRecipeForm(updatedRecipe);
+    if (Object.keys(errors).length > 0) {
+      Object.entries(errors).forEach(([field, msg]) => {
+        let el = form.querySelector(`#${field}`) || form.querySelector(`[name="${field}"]`);
+        if (el) {
+          el.classList.add('input-error');
+          let err = document.createElement('div');
+          err.className = 'form-error';
+          err.innerText = msg;
+          if (el.parentNode) el.parentNode.insertBefore(err, el.nextSibling);
+        }
+      });
+      return;
+    }
 
     onsubmit(updatedRecipe);
     closeForm();
