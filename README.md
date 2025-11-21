@@ -4,6 +4,15 @@ The **Recipe Manager App** is a simple project designed to help users store, org
 
 ---
 
+## **Deployment**
+
+- **Status:** Deployed to GitHub Pages
+- **URL:** https://gauravprajapati03.github.io/Recipe-Manager/
+
+
+
+---
+
 ## 🧭 Overview
 
 - ➕ Adding new recipes  
@@ -18,12 +27,13 @@ This README will be expanded as the project evolves.
 
 ## 🚀 Getting Started
 
-These simple steps will help you run the app locally:
+These simple steps will help you run the app locally or view it online:
 
-1. Clone or download this repository.
-2. Open the `index.html` file in any modern browser (Chrome, Firefox, Edge).
-3. The app will initialize with a default recipe stored in your localStorage on first load.
-4. Start adding, editing, and managing your recipes instantly!
+1. **Click the deployed link to view the live website:** https://gauravprajapati03.github.io/Recipe-Manager/
+2. Clone or download this repository.
+3. Open the `index.html` file in any modern browser (Chrome, Firefox, Edge).
+4. The app will initialize with a default recipe stored in your localStorage on first load.
+5. Start adding, editing, and managing your recipes instantly!
 
 > Note: No server or build tools required — purely static client-side app.
 
@@ -92,3 +102,23 @@ Each recipe must follow these validation requirements:
 - If provided:
   - Must be a **valid URL format**
   - Cannot be just spaces
+
+---
+
+## 🛠️ Assumptions & Limitations
+
+- Data persists only in the browser's localStorage — clearing cache will reset recipes.
+- No user authentication or multi-user support.
+- Images must be supplied via URL; no upload support.
+- Times are entered as numbers representing minutes, no strict format enforced.
+- Validation prevents empty required fields or invalid data but does not check URL validity.
+- Designed to be a minimal vanilla JS application without frontend frameworks.
+
+---
+
+## 🐛 Known Issues & Future Improvements
+
+- Adding/removing ingredients or steps requires manual input fields (can be enhanced UX-wise).
+- No undo/redo or version history for recipe edits.
+- Accessibility improvements can be enhanced further.
+- Persisting data remotely or syncing across devices is not supported.
