@@ -10,6 +10,7 @@
   --modal-scroll-track: rgba(0,0,0,0.04);
   --modal-scroll-thumb: #f7a650;
   --modal-scroll-thumb-hover: #ec800c;
+  --header-height: 75px;
 }
 
 * {
@@ -31,19 +32,21 @@ body {
 /* Header */
 header {
   position: fixed;
-  width: 100%;
-  padding: 20px 28px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: var(--header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(18px);
-  /* -webkit-backdrop-filter: blur(18px); */
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  /* box-shadow: 0 5px 15px rgba(60, 60, 60, 0.12); */
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   z-index: 300;
-  /* box-shadow: 0 5px 15px rgba(60, 60, 60, 0.12); */
+  padding: 16px 20px;
 }
 
 nav {
@@ -69,6 +72,7 @@ nav i {
   letter-spacing: 2px;
   text-transform: uppercase;
   margin-left: 10px;
+  flex-shrink: 0;
 }
 
 .logo span {
@@ -136,6 +140,7 @@ nav i {
 main {
   margin: 0;
   padding: 2rem;
+  padding-top: calc(var(--header-height) + 20px);
   background: #fefefe;
   padding-top: 8%;
   position: relative;
@@ -483,48 +488,195 @@ main {
 
 
 
-
 /* Responsive */
 
-/* Mobile-first Breakpoints */
-@media (max-width: 360px) {
-  /* Mobile */
+.add-recipe-header {
+  padding: 0.52rem 1.2rem;
+  font-size: 1.05em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-left: auto;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  font-size: 2.25em;
+  color: #444;
+  cursor: pointer;
+  margin-left: 0.5em;
+  display: none;
+}
+
+
+#searchForm input[type="search"] {
+  padding: 10px 1.6em 10px 34px;
+  border-radius: 30px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  transition: width 0.3s;
+}
+
+#searchForm i {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #aaa;
+}
+
+.filter-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+
+@media (max-width: 1100px) {
+  #searchForm input[type="search"] {
+    width: 180px;
+    font-size: 0.97em;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-controls {
+    position: absolute;
+    top: calc(var(--header-height) - 1px);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    flex-direction: column;
+    gap: 0.9em;
+    background: rgba(255,255,255,0.97);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+    padding: 1.1em 1.8em 1.3em 1.3em;
+    z-index: 800;
+    display: none;
+    border-radius: 0 0 12px 12px;
+    animation: fadeInNav 200ms;
+  }
+  .nav-controls.open {
+    display: flex;
+  }
+  .nav-toggle {
+    display: block;
+  }
+
+  #searchForm {
+    width: 100%;
+    position: relative;
+  }
+
+  #searchForm input[type="search"] {
+    width: 90%;
+    font-size: 1em;
+    margin-left: 1.6em;
+    padding: 10px 0.8em 10px 38px;
+  }
+  #searchForm i {
+    left: 32px;
+    font-size: 1.2em;
+  }
+
+  .recipe-detail-actions button {
+    margin: 0;
+  }
+
+  .recipe-detail-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  #recipeDetail .recipe-detail {
+    padding: 1.25rem;
+  }
+
+  .recipe-detail h2 {
+    font-size: 2.25rem;
+  }
+
+  .recipe-detail-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .recipe-detail-ingredients,
+  .recipe-detail-steps {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    margin-left: 1.5rem;
+    font-size: 1.05rem;
+  }
+
+  .time-inputs {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .form-header {
+    font-size: 1.15rem;
+  }
+  .form-actions {
+    font-size: 0.9rem;
+  }
+
+  #btnAddRecipe {
+    font-size: 1rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  .logo {
+    font-size: 1.75rem;
+  }
+
+  .close-detail {
+    font-size: 1.35rem;
+  }
+
+  .close-form {
+    font-size: 1.25rem;
+  }
+
+  .add-recipe-form {
+    /* width: 100%; */
+    max-height: 75vh;
+    padding: 1.2rem;
+    gap: 0.85rem;
+  }
 }
 
 @media (max-width: 600px) {
-  /* Tablet / Small Desktop */
-  .time-inputs {
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
+  .add-recipe-header {
+    font-size: 0.97em;
+    padding: 0.36rem 0.8rem;
   }
-
-  .form-header {  
-    font-size: 1rem;
-  }
-
-  .form-actions button {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-
-}
-
-@media (max-width: 768px) {
-  /* Small screens */
-  nav {
-    display: none;
-  }
-
-  main {
-    padding-top: 15%;
+  .nav-toggle {
+    font-size: 2.1em;
+    margin-left: 0.3em;
   }
 }
 
-@media (min-width: 1024px) {
-  /* Larger desktop / Tablets in landscape */
+
+/* Push content below header */
+main {
+  margin: 0;
+  padding: 2rem 3vw 2rem 3vw;
+  padding-top: calc(var(--header-height) + 16px);
+  background: #fefefe;
+  position: relative;
+  min-height: 100vh;
 }
 
-@media (min-width: 1280px) {
-  /* Large screens */
+/* Animate nav dropdown */
+@keyframes fadeInNav {
+  from { opacity: 0; transform: translateY(-8px);}
+  to { opacity: 1; transform: translateY(0);}
 }

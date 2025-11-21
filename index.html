@@ -15,27 +15,32 @@
 <body>
     <!-- Header -->
     <header class="glass-header">
-        <h1 class="logo">Recipe<span>X</span> </h1>
-        <nav>
+        <button class="nav-toggle" aria-label="Toggle menu">
+            <i class="ri-menu-line"></i>
+        </button>
+        <h1 class="logo">Recipe<span>X</span></h1>
+        <nav class="nav-controls">
             <form id="searchForm" role="search" aria-label="Recipe Search">
                 <i class="ri-search-line"></i>
-                <input type="search" id="inputSearch" placeholder="Search recipes by title..."
-                    aria-label="Search recipes" />
+                <input type="search" id="inputSearch" placeholder="Search by title..." aria-label="Search recipes" />
             </form>
-            <select id="filterDifficulty" class="filter-select" aria-label="Filter recipes by difficulty">
+            <div class="filter-group">
+                <select id="filterDifficulty" class="filter-select" aria-label="Filter by difficulty">
                 <option value="All">Filter by Difficulty</option>
                 <option value="Easy">Easy</option>
                 <option value="Medium">Medium</option>
                 <option value="Hard">Hard</option>
             </select>
-            <select id="filterTime" class="filter-select" aria-label="Filter recipes by time">
+            <select id="filterTime" class="filter-select" aria-label="Filter by time">
                 <option value="All">Filter by Time</option>
                 <option value="lessthanfifteen">&lt; 15 min</option>
                 <option value="between">15 - 30 min</option>
                 <option value="morethanthirty">&gt; 30 min</option>
             </select>
+            </div>
         </nav>
-        <button type="button" id="btnAddRecipe" aria-label="Add Recipe Button">Add Recipe</button>
+        <button type="button" id="btnAddRecipe" class="add-recipe-header" aria-label="Add Recipe Button">Add
+            Recipe</button>
     </header>
 
     <!-- Main Content -->

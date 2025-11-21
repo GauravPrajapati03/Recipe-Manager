@@ -163,5 +163,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+  // Nav burger menu toggle
+  const btn = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav-controls');
+  btn.addEventListener('click', () => nav.classList.toggle('open'));
+
 
 });
