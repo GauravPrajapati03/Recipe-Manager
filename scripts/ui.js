@@ -69,7 +69,7 @@ export function renderAddRecipeForm(onSubmit) {
           </label>
           
           <label for="description">Description*
-          <textarea id="description" name="description" placeholder="recipe description" required></textarea>
+          <textarea id="description" name="description" rows="3" placeholder="recipe description" required></textarea>
           </label>
           
           <label for="ingredients">Ingredients* (comma separated)
@@ -77,7 +77,7 @@ export function renderAddRecipeForm(onSubmit) {
           </label>
           
           <label for="steps">Steps*
-          <textarea id="steps" name="steps" placeholder="recipe steps" required></textarea>
+          <textarea id="steps" name="steps" placeholder="recipe steps" rows="5" required></textarea>
           </label>
           
           <div class="time-inputs">
@@ -106,7 +106,7 @@ export function renderAddRecipeForm(onSubmit) {
           <input type="text" id="imageURL" name="imageURL" placeholder="https://example.com/image.jpg">
           </label>
           
-          <div >
+          <div class="form-actions">
               <button type="submit" id="addRecipeBtn">Add Recipe</button>
               <button type="button" id="cancelBtn">Cancel</button>
           </div>

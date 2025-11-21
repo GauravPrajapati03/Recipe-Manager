@@ -49,6 +49,36 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 
+
+  // Elements
+  const searchInput = document.getElementById("inputSearch");
+  const difficultyFilter = document.getElementById("filterDifficulty");
+  const addRecipeBtn = document.getElementById("btnAddRecipe");
+
+  // Search handler
+  searchInput.addEventListener("input", () => {
+    filterAndRender();
+  });
+
+  // Difficulty filter handler
+  difficultyFilter.addEventListener("change", () => {
+    filterAndRender();
+  });
+
+  // Applies search and filter on allRecipes and updates UI
+  function filterAndRender() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const diffValue = difficultyFilter.value;
+
+    let filtered = allRecipes.filter((recipe) => {
+      const matchesSearch = recipe.title.toLowerCase().includes(searchTerm);
+      const matchesDifficulty =
+        diffValue === "All" || recipe.difficulty === diffValue;
+      return matchesSearch && matchesDifficulty;
+    });
+
+    renderRecipeList(filtered);
+  }
 });
 
 

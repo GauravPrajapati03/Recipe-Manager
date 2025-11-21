@@ -156,7 +156,7 @@ main {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 380px; /* Ensures consistent card height in grid */
+  min-height: 380px;
   cursor: pointer;
 }
 
@@ -234,11 +234,11 @@ main {
   margin-top: 0.6rem;
 }
 
-/* Example for a badge inside .recipe-card-info */
+/* Difficulty badge inside .recipe-card-info */
 .difficulty-badge {
   display: inline-block;
   font-size: 1.12em;
-  color: #28a745; /* Easy */
+  color: #28a745;
 }
 .difficulty-medium {
   color: #fd7e14;
@@ -261,8 +261,8 @@ main {
   box-shadow: 0 8px 30px rgba(0,0,0,0.12);
   width: 720px;
   max-width: 95%;
-  max-height: 70vh; /* constrain to 70% viewport height */
-  overflow-y: auto; /* scroll inside the form when needed */
+  max-height: 70vh;
+  overflow-y: auto;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -320,7 +320,6 @@ main {
 
 .time-inputs {
   display: flex;
-  align-items: center;
   margin: 0.5rem 0;
   justify-content: space-between;
 }
@@ -398,7 +397,7 @@ main {
 /* Modal overlay that centers the detail card */
 #recipeDetail .modal-overlay {
   position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -407,17 +406,16 @@ main {
   padding: 1.5rem;
 }
 
-/* Make the detail card constrained and elevated inside the overlay */
 #recipeDetail .recipe-detail {
   max-width: 720px;
   width: 100%;
   transform: none;
-  max-height: 80vh; /* constrain modal height to 60% of viewport */
-  overflow-y: auto;  /* enable scrolling within the modal when content overflows */
+  max-height: 80vh;
+  overflow-y: auto;
   box-sizing: border-box;
 }
 
-/* Improve scroll appearance for the modal on WebKit */
+/* Improve scroll appearance for the modal window */
 #recipeDetail .recipe-detail::-webkit-scrollbar {
   width: 10px;
 }
@@ -494,6 +492,21 @@ main {
 
 @media (max-width: 600px) {
   /* Tablet / Small Desktop */
+  .time-inputs {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .form-header {  
+    font-size: 1rem;
+  }
+
+  .form-actions button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
 }
 
 @media (max-width: 768px) {
