@@ -152,6 +152,8 @@ export function renderAddRecipeForm(onSubmit) {
   });
 
   // Cancel button
+  const close = document.querySelector('.close-form');
+  close.addEventListener('click', () => closeForm());
   const cancelBtn = document.getElementById('cancelBtn');
   cancelBtn.addEventListener('click', () => closeForm());
 
@@ -233,14 +235,23 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
   document.addEventListener('keydown', escHandler);
 
   // Wire up buttons
+  const close = detailContainer.querySelector('.close-detail');
   const closeBtn = detailContainer.querySelector('#closeDetailBtn');
   const editBtn = detailContainer.querySelector('#editRecipeBtn');
   const deleteBtn = detailContainer.querySelector('#deleteRecipeBtn');
 
+  close.onclick = () => closeDetail();
   closeBtn.onclick = () => closeDetail();
   editBtn.onclick = () => { if (onEdit) onEdit(recipe); };
   deleteBtn.onclick = () => {
-    // Let the caller handle deletion logic, then close and cleanup UI state.
+    const confirmed = confirm(
+      `Are you sure you want to delete the recipe "${recipe.title}"? This action cannot be undone.`
+    );
+
+    if (!confirmed) {
+      return;
+    }
+    // User confirmed → proceed with deletion
     if (onDelete) onDelete(recipe);
     closeDetail(false);
   };
