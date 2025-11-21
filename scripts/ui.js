@@ -1,137 +1,247 @@
 // UI rendering / manipulation functions
 
 function clearElement(container) {
-    while (container.firstChild) {
-        container.removeChild(container.firstChild);
-    }
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
 }
 
-export function renderRecipeList(recipes) {
-    const container = document.getElementById("recipeList");
-    clearElement(container);
+export function renderRecipeList(recipes, onViewRecipe) {
+  const container = document.getElementById("recipeList");
+  clearElement(container);
 
-    if (recipes.length === 0) {
-        const noRecipes = document.createElement("p");
-        noRecipes.textContent = "No recipes found.";
-        container.appendChild(noRecipes);
-        return;
-    }
+  if (recipes.length === 0) {
+    const noRecipes = document.createElement("p");
+    noRecipes.textContent = "No recipes found.";
+    container.appendChild(noRecipes);
+    return;
+  }
 
-    // Create grid and add cards
-    for (const recipe of recipes) {
-        const card = createRecipeCard(recipe);
-        container.appendChild(card);
-    }
+  // Create grid and add cards
+  for (const recipe of recipes) {
+    const card = createRecipeCard(recipe, onViewRecipe);
+    container.appendChild(card);
+  }
 }
 
-function createRecipeCard(recipe) {
-    const card = document.createElement("article");
-    card.className = "recipe-card";
-    card.setAttribute("tabindex", "0");
-
-    card.innerHTML = `
-    <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-card-image" lazy="loading" />
+function createRecipeCard(recipe, onView) {
+  const card = document.createElement("article");
+  card.className = "recipe-card";
+  card.setAttribute("tabindex", "0");
+  card.innerHTML = `
+    <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-card-image" loading="lazy" />
     <div class="recipe-card-content">
-        <h3 class="recipe-card-title">${recipe.title}</h3>
-        <p class="recipe-card-description">${recipe.description}</p>
-        <p class="recipe-card-info">
-            Difficulty: <span class="difficulty-badge difficulty-${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</span> | Total Time: ${recipe.totalTime} min
-        </p>
+      <h3 class="recipe-card-title">${recipe.title}</h3>
+      <p class="recipe-card-description">${recipe.description}</p>
+      <p class="recipe-card-info">
+        Difficulty: <span class="difficulty-badge difficulty-${recipe.difficulty.toLowerCase()}">${recipe.difficulty}</span> | Total Time: ${recipe.totalTime} min
+      </p>
     </div>
   `;
 
-    return card;
+  // Attach view click handler
+  card.addEventListener("click", () => {
+    if (typeof onView === "function") onView(recipe);
+  });
+
+  return card;
 }
+
 
 
 // Recipe Form UI
 
 export function renderAddRecipeForm(onSubmit) {
-    const formContainer = document.getElementById('recipeForm');
-    // console.log(formContainer);
+  const formContainer = document.getElementById('recipeForm');
+  const recipeListEl = document.getElementById('recipeList');
 
-    formContainer.innerHTML = `
-    <form id="addRecipeForm" class="add-recipe-form">
-        <h2>Add New Recipe</h2>
+  // Render the form inside a centered overlay so it acts like a modal
+  formContainer.innerHTML = `
+    <div class="form-overlay" role="dialog" aria-modal="true">
+      <form id="addRecipeForm" class="add-recipe-form">
+          <div class="form-header">
+            <h2>Add New Recipe</h2>
+            <i class="ri-close-large-line close-form"></i>
+          </div>
+          <label for="title">
+          Title*
+          <input type="text" id="title" name="title" placeholder="recipe name" required>
+          </label>
+          
+          <label for="description">Description*
+          <textarea id="description" name="description" placeholder="recipe description" required></textarea>
+          </label>
+          
+          <label for="ingredients">Ingredients* (comma separated)
+          <input type="text" id="ingredients" name="ingredients" placeholder="ingredients list" required>
+          </label>
+          
+          <label for="steps">Steps*
+          <textarea id="steps" name="steps" placeholder="recipe steps" required></textarea>
+          </label>
+          
+          <div class="time-inputs">
+            <label for="prepTime">Prep Time (in minutes)*
+            <input type="number" min="0" id="prepTime" name="prepTime" placeholder="e.g. 10 min" required>
+            </label>
 
-        <label for="title">
-        Title*
-        <input type="text" id="title" name="title" required>
-        </label>
-        
-        <label for="description">Description*
-        <textarea id="description" name="description" required></textarea>
-        </label>
-        
-        <label for="ingredients">Ingredients* (comma separated)
-        <input type="text" id="ingredients" name="ingredients" required>
-        </label>
-        
-        <label for="steps">Steps*
-        <textarea id="steps" name="steps" required></textarea>
-        </label>
-        
-        <label for="prepTime">Prep Time (in minutes)*
-        <input type="number" min="0" id="prepTime" name="prepTime" required>
-        </label>
-        
-        <label for="cookTime">Cook Time (in minutes)*
-        <input type="number" min="0" id="cookTime" name="cookTime" required>
-        </label>
-        
-        <label for="totalTime">Total Time (in minutes)*
-        <input type="number" min="0" id="totalTime" name="totalTime" required>
-        </label>
-        
-        <label for="difficulty">Difficulty*
-        <select id="difficulty" name="difficulty" required>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-        </select>
-        </label>
-        
-        <label for="imageURL">Image URL
-        <input type="text" id="imageURL" name="imageURL">
-        </label>
-        
-        <div >
-            <button type="submit" id="addRecipeBtn">Add Recipe</button>
-            <button type="button" id="cancelBtn">Cancel</button>
-        </div>
+            <label for="cookTime">Cook Time (in minutes)*
+            <input type="number" min="0" id="cookTime" name="cookTime" placeholder="e.g. 20 min" required>
+            </label>
 
-    </form>
+            <label for="totalTime">Total Time (in minutes)*
+            <input type="number" min="0" id="totalTime" name="totalTime" placeholder="e.g. 30 min" required>
+            </label>
+          </div>
+          
+          <label for="difficulty">Difficulty*
+          <select id="difficulty" name="difficulty" required>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+          </select>
+          </label>
+          
+          <label for="imageURL">Image URL
+          <input type="text" id="imageURL" name="imageURL" placeholder="https://example.com/image.jpg">
+          </label>
+          
+          <div >
+              <button type="submit" id="addRecipeBtn">Add Recipe</button>
+              <button type="button" id="cancelBtn">Cancel</button>
+          </div>
+
+      </form>
+    </div>
     `;
 
-    formContainer.classList.remove('hidden');
+  // Show overlay and blur the grid
+  formContainer.classList.remove('hidden');
+  recipeListEl.classList.add('blurred');
 
-    // Add Recipe Operation
-    const form = document.getElementById('addRecipeForm');
+  const overlay = formContainer.querySelector('.form-overlay');
+  const form = document.getElementById('addRecipeForm');
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+  // Close helpers
+  function closeForm() {
+    formContainer.classList.add('hidden');
+    recipeListEl.classList.remove('blurred');
+    document.removeEventListener('keydown', escHandler);
+  }
 
-        const formData = ({
-            id: Date.now().toString(),
-            title: document.getElementById('title').value,
-            description: document.getElementById('description').value,
-            ingredients: document.getElementById('ingredients').value,
-            steps: document.getElementById('steps').value,
-            prepTime: document.getElementById('prepTime').value,
-            cookTime: document.getElementById('cookTime').value,
-            totalTime: document.getElementById('totalTime').value,
-            difficulty: document.getElementById('difficulty').value,
-            imageURL: document.getElementById('imageURL').value
-        });
-        console.log(formData);
+  // Submit handler
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-        onSubmit(formData);
+    const formData = ({
+      id: Date.now().toString(),
+      title: document.getElementById('title').value,
+      description: document.getElementById('description').value,
+      ingredients: document.getElementById('ingredients').value,
+      steps: document.getElementById('steps').value,
+      prepTime: document.getElementById('prepTime').value,
+      cookTime: document.getElementById('cookTime').value,
+      totalTime: document.getElementById('totalTime').value,
+      difficulty: document.getElementById('difficulty').value,
+      imageURL: document.getElementById('imageURL').value
+    });
 
-    })
+    onSubmit(formData);
+    // close modal after submit
+    closeForm();
+  });
 
-    // Cancel Operation
-    const cancelBtn = document.getElementById('cancelBtn');
-    cancelBtn.addEventListener('click', () => {
-        formContainer.classList.add('hidden');
-    })
+  // Cancel button
+  const cancelBtn = document.getElementById('cancelBtn');
+  cancelBtn.addEventListener('click', () => closeForm());
+
+  // Close when clicking outside the form
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeForm();
+  });
+
+  // Escape key closes form
+  function escHandler(e) {
+    if (e.key === 'Escape') closeForm();
+  }
+  document.addEventListener('keydown', escHandler);
+}
+
+
+// Recipe Detail UI
+export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
+  const detailContainer = document.getElementById("recipeDetail");
+  // Put the detail inside a full-screen overlay so it appears centered,
+  // and blur / disable the recipe grid while open.
+  const recipeListEl = document.getElementById("recipeList");
+
+  detailContainer.innerHTML = `
+    <div class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="recipe-detail">
+        <i class="ri-close-large-line close-detail"></i>
+        <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-detail-image" loading="lazy" />
+        <h2>${recipe.title}</h2>
+        <p class="recipe-detail-desc">${recipe.description}</p>
+        <div class="recipe-detail-meta">
+          <span><b>Difficulty:</b> ${recipe.difficulty}</span>
+          <span><b>Prep Time:</b> ${recipe.prepTime} min</span>
+          <span><b>Cook Time:</b> ${recipe.cookTime} min</span>
+          <span><b>Total Time:</b> ${recipe.totalTime} min</span>
+        </div>
+        <div>
+          <h3 class="section-title">Ingredients</h3>
+          <ul class="recipe-detail-ingredients">
+            ${(Array.isArray(recipe.ingredients) ? recipe.ingredients : String(recipe.ingredients).split(',')).map(i => `<li>${i}</li>`).join('')}
+          </ul>
+          <h3 class="section-title">Steps</h3>
+          <ol class="recipe-detail-steps">
+            ${(Array.isArray(recipe.steps) ? recipe.steps : String(recipe.steps).split('\n')).map(s => `<li>${s}</li>`).join('')}
+          </ol>
+        </div>
+        <div class="recipe-detail-actions">
+          <button id="editRecipeBtn">Edit</button>
+          <button id="deleteRecipeBtn">Delete</button>
+          <button id="closeDetailBtn">Close</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Show overlay and blur/disable the grid
+  detailContainer.classList.remove("hidden");
+  recipeListEl.classList.add("blurred");
+
+  const overlay = detailContainer.querySelector('.modal-overlay');
+
+  // Function to close and cleanup
+  function closeDetail(triggerOnClose = true) {
+    detailContainer.classList.add('hidden');
+    recipeListEl.classList.remove('blurred');
+    if (triggerOnClose && typeof onClose === 'function') onClose();
+    document.removeEventListener('keydown', escHandler);
+  }
+
+  // Close when clicking outside the card (on the overlay)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeDetail();
+  });
+
+  // Close on Escape key
+  function escHandler(e) {
+    if (e.key === 'Escape') closeDetail();
+  }
+  document.addEventListener('keydown', escHandler);
+
+  // Wire up buttons
+  const closeBtn = detailContainer.querySelector('#closeDetailBtn');
+  const editBtn = detailContainer.querySelector('#editRecipeBtn');
+  const deleteBtn = detailContainer.querySelector('#deleteRecipeBtn');
+
+  closeBtn.onclick = () => closeDetail();
+  editBtn.onclick = () => { if (onEdit) onEdit(recipe); };
+  deleteBtn.onclick = () => {
+    // Let the caller handle deletion logic, then close and cleanup UI state.
+    if (onDelete) onDelete(recipe);
+    closeDetail(false);
+  };
 }
