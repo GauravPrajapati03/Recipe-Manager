@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("inputSearch");
   const difficultyFilter = document.getElementById("filterDifficulty");
   const addRecipeBtn = document.getElementById("btnAddRecipe");
+  const filterTime = document.getElementById("filterTime");
 
   // Search handler
   searchInput.addEventListener("input", () => {
@@ -84,16 +85,36 @@ document.addEventListener("DOMContentLoaded", () => {
     filterAndRender();
   });
 
+  // Time filter handler
+  filterTime.addEventListener("change", () => {
+    filterAndRender();
+  });
+
   // Applies search and filter on allRecipes and updates UI
   function filterAndRender() {
     const searchTerm = searchInput.value.trim().toLowerCase();
     const diffValue = difficultyFilter.value;
+    const timeValue = filterTime.value;
 
     currentRecipes = allRecipes.filter((recipe) => {
       const matchesSearch = recipe.title.toLowerCase().includes(searchTerm);
+      // Difficulty filter
       const matchesDifficulty =
         diffValue === "All" || recipe.difficulty === diffValue;
-      return matchesSearch && matchesDifficulty;
+
+      // Time filter
+      let matchesTime = true;
+      const time = Number(recipe.totalTime);
+
+      if (timeValue === "lessthanfifteen") {
+        matchesTime = time < 15;
+      } else if (timeValue === "between") {
+        matchesTime = time >= 15 && time <= 30;
+      } else if (timeValue === "morethanthirty") {
+        matchesTime = time > 30;
+      }
+
+      return matchesSearch && matchesDifficulty && matchesTime;
     });
 
     renderRecipeList(currentRecipes, onViewRecipe);
@@ -102,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // update recipe handler
   function onUpdateRecipe(updatedRecipe) {
-    
+
     // Normalize ingredient/step values
     updatedRecipe.ingredients = typeof updatedRecipe.ingredients === 'string'
       ? updatedRecipe.ingredients.split(',').map(s => s.trim()).filter(Boolean)
