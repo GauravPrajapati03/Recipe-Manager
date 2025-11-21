@@ -76,7 +76,7 @@ export function renderAddRecipeForm(onSubmit) {
           <input type="text" id="ingredients" name="ingredients" placeholder="ingredients list" required>
           </label>
           
-          <label for="steps">Steps*
+          <label for="steps">Steps* (enter each step on a new line)
           <textarea id="steps" name="steps" placeholder="recipe steps" rows="5" required></textarea>
           </label>
           

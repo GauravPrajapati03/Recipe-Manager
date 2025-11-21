@@ -37,17 +37,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const addRecipeFormBtn = document.getElementById("btnAddRecipe");
 
   addRecipeFormBtn.addEventListener('click', () => {
-    renderAddRecipeForm(function (newRecipe) {
-      const recipes = getRecipes();
-      // console.log(recipes);
-      recipes.push(newRecipe);
-      saveRecipes(recipes);
-      renderRecipeList(recipes);
-
-      // Close form
-      document.getElementById("recipeForm").classList.add("hidden");
-    })
+    renderAddRecipeForm(handleAddRecipe);
   })
+
+  function handleAddRecipe(newRecipe) {
+    // Normalize ingredient/step values
+    newRecipe.ingredients = typeof newRecipe.ingredients === 'string'
+      ? newRecipe.ingredients.split(',').map(s => s.trim()).filter(Boolean)
+      : newRecipe.ingredients;
+
+    newRecipe.steps = typeof newRecipe.steps === 'string'
+      ? newRecipe.steps.split('\n').map(s => s.trim()).filter(Boolean)
+      : newRecipe.steps;
+
+    // Add the recipe to your in-memory array
+    allRecipes.unshift(newRecipe);
+
+    // Save to localStorage
+    saveRecipes(allRecipes);
+
+    // Update UI (always pass detail-view handler!)
+    renderRecipeList(allRecipes, onViewRecipe);
+  }
 
 
   // Elements
@@ -80,5 +91,3 @@ document.addEventListener("DOMContentLoaded", () => {
     renderRecipeList(filtered);
   }
 });
-
-
