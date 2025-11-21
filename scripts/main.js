@@ -1,7 +1,7 @@
 // Entry Point and Event Listeners
 
 import { initializeRecipes, getRecipes, saveRecipes } from "./storage.js";
-import { renderRecipeList, renderAddRecipeForm, renderRecipeDetail } from "./ui.js";
+import { renderRecipeList, renderAddRecipeForm, renderRecipeDetail, renderEditRecipeForm } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize localStorage with starter data
@@ -17,7 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function onViewRecipe(recipe) {
     renderRecipeDetail(recipe, {
-      onEdit: (r) => { /* open edit form */ },
+      onEdit: () => {
+        renderEditRecipeForm(recipe, onUpdateRecipe);
+      },
       onDelete: (r) => {
         // Remove from both allRecipes and currentRecipes
         allRecipes = allRecipes.filter(rec => rec.id !== r.id);
@@ -96,4 +98,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderRecipeList(currentRecipes, onViewRecipe);
   }
+
+
+  // update recipe handler
+  function onUpdateRecipe(updatedRecipe) {
+    
+    // Normalize ingredient/step values
+    updatedRecipe.ingredients = typeof updatedRecipe.ingredients === 'string'
+      ? updatedRecipe.ingredients.split(',').map(s => s.trim()).filter(Boolean)
+      : updatedRecipe.ingredients;
+
+    updatedRecipe.steps = typeof updatedRecipe.steps === 'string'
+      ? updatedRecipe.steps.split('\n').map(s => s.trim()).filter(Boolean)
+      : updatedRecipe.steps;
+
+    // Update original arrays
+    const idx = allRecipes.findIndex(r => r.id === updatedRecipe.id);
+
+    if (idx !== -1) {
+      allRecipes[idx] = updatedRecipe;
+
+      const currIdx = currentRecipes.findIndex(r => r.id === updatedRecipe.id);
+      if (currIdx !== -1) currentRecipes[currIdx] = updatedRecipe;
+
+      saveRecipes(allRecipes);
+
+      document.getElementById("recipeForm").classList.add("hidden");
+
+      renderRecipeDetail(updatedRecipe, {
+        onEdit: () => {
+          renderEditRecipeForm(updatedRecipe, onUpdateRecipe)
+        },
+        onDelete: (r) => {
+          allRecipes = allRecipes.filter(rec => rec.id !== r.id);
+          saveRecipes(allRecipes);
+          document.getElementById("recipeDetail").classList.add("hidden");
+          showRecipeList();
+        },
+        onClose: showRecipeList
+      });
+
+    }
+  }
+
+
+
 });

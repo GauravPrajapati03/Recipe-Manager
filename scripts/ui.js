@@ -242,7 +242,10 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
 
   close.onclick = () => closeDetail();
   closeBtn.onclick = () => closeDetail();
-  editBtn.onclick = () => { if (onEdit) onEdit(recipe); };
+  editBtn.onclick = () => {
+    console.log(`Edit button Clicked`);
+    if (onEdit) onEdit(recipe);
+  };
   deleteBtn.onclick = () => {
     const confirmed = confirm(
       `Are you sure you want to delete the recipe "${recipe.title}"? This action cannot be undone.`
@@ -255,4 +258,89 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
     if (onDelete) onDelete(recipe);
     closeDetail(false);
   };
+}
+
+
+
+// Edit Form UI
+export function renderEditRecipeForm(recipe, onsubmit) {
+  const formContainer = document.getElementById('recipeForm');
+  const recipeListEl = document.getElementById('recipeList');
+
+  formContainer.innerHTML = `
+    <div class="form-overlay" role="dialog" aria-modal="true">
+      <form id="editRecipeForm" class="add-recipe-form">
+        <div class="form-header">
+          <h2>Edit Recipe</h2>
+          <i class="ri-close-large-line close-form"></i>
+        </div>
+        <label>Title* <input type="text" name="title" required value="${recipe.title}" /></label>
+        <label>Description* <textarea name="description" rows="3" required>${recipe.description}</textarea></label>
+        <label>Ingredients* (comma separated) <input type="text" name="ingredients" required value="${Array.isArray(recipe.ingredients) ? recipe.ingredients.join(',') : recipe.ingredients}" /></label>
+        <label>Steps* <textarea name="steps" rows="5" required>${Array.isArray(recipe.steps) ? recipe.steps.join('\n') : recipe.steps}</textarea></label>
+        <div class="time-inputs">
+          <label>Prep Time* <input type="number" name="prepTime" min="0" required value="${recipe.prepTime}" /></label>
+          <label>Cook Time* <input type="number" name="cookTime" min="0" required value="${recipe.cookTime}" /></label>
+          <label>Total Time* <input type="number" name="totalTime" min="0" required value="${recipe.totalTime}" /></label>
+        </div>
+        <label>Difficulty* <select name="difficulty" required>
+          <option value="Easy" ${recipe.difficulty === "Easy" ? "selected" : ""}>Easy</option>
+          <option value="Medium" ${recipe.difficulty === "Medium" ? "selected" : ""}>Medium</option>
+          <option value="Hard" ${recipe.difficulty === "Hard" ? "selected" : ""}>Hard</option>
+        </select></label>
+        <label>Image URL <input type="text" name="imageURL" value="${recipe.imageURL || ''}" /></label>
+        <div class="form-actions">
+          <button type="submit">Save</button>
+          <button type="button" id="cancelEditBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  // show overlay and blur grid
+  formContainer.classList.remove('hidden');
+  recipeListEl.classList.add('blurred');
+  document.getElementById('recipeDetail').classList.add('hidden');
+
+  const overlay = formContainer.querySelector('.form-overlay');
+  const form = document.getElementById('editRecipeForm');
+
+  function closeForm() {
+    formContainer.classList.add('hidden');
+    recipeListEl.classList.remove('blurred');
+    document.removeEventListener('keydown', escHandler);
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const updatedRecipe = {
+      ...recipe,
+      title: formData.get('title'),
+      description: formData.get('description'),
+      ingredients: formData.get('ingredients'),
+      steps: formData.get('steps'),
+      prepTime: formData.get('prepTime'),
+      cookTime: formData.get('cookTime'),
+      totalTime: formData.get('totalTime'),
+      difficulty: formData.get('difficulty'),
+      imageURL: formData.get('imageURL')
+    };
+
+    onsubmit(updatedRecipe);
+    closeForm();
+  });
+
+  const closeIcon = formContainer.querySelector('.close-form');
+  if (closeIcon) closeIcon.addEventListener('click', () => closeForm());
+
+  const cancelBtn = document.getElementById('cancelEditBtn');
+  cancelBtn.addEventListener('click', () => closeForm());
+
+  function escHandler(e) {
+    if (e.key === 'Escape') closeForm();
+  }
+  document.addEventListener('keydown', escHandler);
+
 }
