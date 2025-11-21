@@ -137,6 +137,11 @@ export function renderAddRecipeForm(onSubmit) {
     function clearErrors() {
       form.querySelectorAll('.form-error').forEach(n => n.remove());
       form.querySelectorAll('.input-error').forEach(n => n.classList.remove('input-error'));
+      // remove aria attributes set on invalid fields
+      form.querySelectorAll('[aria-invalid="true"]').forEach(el => {
+        el.removeAttribute('aria-invalid');
+        el.removeAttribute('aria-describedby');
+      });
     }
 
     // Always clear previous errors before validating again
@@ -161,13 +166,32 @@ export function renderAddRecipeForm(onSubmit) {
         let el = form.querySelector(`#${field}`) || form.querySelector(`[name="${field}"]`);
         if (el) {
           el.classList.add('input-error');
+          // create accessible error node
           let err = document.createElement('div');
+          const errorId = `error-${field}`;
+          err.id = errorId;
           err.className = 'form-error';
           err.innerText = msg;
+          // attach aria attributes to the field
+          el.setAttribute('aria-invalid', 'true');
+          el.setAttribute('aria-describedby', errorId);
           // Insert error immediately after the field element
           if (el.parentNode) el.parentNode.insertBefore(err, el.nextSibling);
         }
       });
+
+      // Focus and scroll the first invalid input so the error is visible
+      const firstInvalid = form.querySelector('.input-error');
+      if (firstInvalid) {
+        try {
+          firstInvalid.focus({ preventScroll: false });
+        } catch (e) {
+          // ignore browsers that don't support options
+          firstInvalid.focus();
+        }
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
       return; // Prevent form submission if errors
     }
 
@@ -181,11 +205,6 @@ export function renderAddRecipeForm(onSubmit) {
   close.addEventListener('click', () => closeForm());
   const cancelBtn = document.getElementById('cancelBtn');
   cancelBtn.addEventListener('click', () => closeForm());
-
-  // Close when clicking outside the form
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeForm();
-  });
 
   // Escape key closes form
   function escHandler(e) {
@@ -343,6 +362,10 @@ export function renderEditRecipeForm(recipe, onsubmit) {
     function clearEditErrors() {
       form.querySelectorAll('.form-error').forEach(n => n.remove());
       form.querySelectorAll('.input-error').forEach(n => n.classList.remove('input-error'));
+      form.querySelectorAll('[aria-invalid="true"]').forEach(el => {
+        el.removeAttribute('aria-invalid');
+        el.removeAttribute('aria-describedby');
+      });
     }
     clearEditErrors();
 
@@ -367,12 +390,24 @@ export function renderEditRecipeForm(recipe, onsubmit) {
         let el = form.querySelector(`#${field}`) || form.querySelector(`[name="${field}"]`);
         if (el) {
           el.classList.add('input-error');
-          let err = document.createElement('div');
+          const err = document.createElement('div');
+          const errorId = `error-${field}`;
+          err.id = errorId;
           err.className = 'form-error';
           err.innerText = msg;
+          el.setAttribute('aria-invalid', 'true');
+          el.setAttribute('aria-describedby', errorId);
           if (el.parentNode) el.parentNode.insertBefore(err, el.nextSibling);
         }
       });
+
+      // Focus and scroll the first invalid input
+      const firstInvalid = form.querySelector('.input-error');
+      if (firstInvalid) {
+        try { firstInvalid.focus({ preventScroll: false }); } catch (e) { firstInvalid.focus(); }
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
       return;
     }
 

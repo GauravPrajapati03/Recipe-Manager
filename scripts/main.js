@@ -168,5 +168,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const nav = document.querySelector('.nav-controls');
   btn.addEventListener('click', () => nav.classList.toggle('open'));
 
+  // Close mobile nav when clicking outside of it
+  document.addEventListener('click', (e) => {
+    // If nav is not open, nothing to do
+    if (!nav.classList.contains('open')) return;
+
+    // If the click happened inside the nav or on the toggle button, keep it open/handled by toggle
+    const clickedInsideNav = e.target.closest('.nav-controls');
+    const clickedToggle = e.target.closest('.nav-toggle');
+    if (!clickedInsideNav && !clickedToggle) {
+      nav.classList.remove('open');
+    }
+  });
+
 
 });
