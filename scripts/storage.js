@@ -22,31 +22,51 @@ export function initializeRecipes() {
     if (!localStorage.getItem(Storage_Key)) {
         const initializeRecipes = [
             {
-                id: Date.now().toString(),
-                title: "Classic Margherita Pizza",
-                description: "A simple and delicious Italian pizza with fresh mozzarella and basil.",
-                ingredients: [
-                    "Pizza dough",
-                    "Tomato sauce",
-                    "Fresh mozzarella cheese",
-                    "Fresh basil leaves",
-                    "Olive oil",
-                    "Salt and pepper to taste"
+                "id": (Date.now()).toString(),
+                "title": "Mutter Paneer",
+                "description": "A classic North Indian curry of paneer and green peas simmered in a spiced tomato-onion gravy.",
+                "ingredients": [
+                    "Paneer – 200 g, cut into 1.5 cm cubes",
+                    "Green peas – 100 g (fresh or frozen)",
+                    "Onion – 1 small (100 g), finely chopped",
+                    "Tomatoes – 200 g pureed (or canned puree)",
+                    "Ginger paste – 1 tsp",
+                    "Garlic paste – 1 tsp",
+                    "Green chili – 1 slit (optional)",
+                    "Oil – 2 tbsp (or 1 tbsp oil + 1 tbsp ghee)",
+                    "Cumin seeds – 1/2 tsp",
+                    "Turmeric – 1/4 tsp",
+                    "Red chili powder – 3/4 tsp",
+                    "Coriander powder – 1 tsp",
+                    "Cumin powder – 1/2 tsp (optional)",
+                    "Garam masala – 1/2 tsp",
+                    "Kasuri methi – 1 tsp, crushed",
+                    "Salt – 3/4 to 1 tsp (to taste)",
+                    "Water – 150 ml",
+                    "Fresh cream – 1 tbsp OR yogurt – 2 tbsp (optional)",
+                    "Fresh cilantro – chopped, for garnish",
+                    "Lemon wedges – optional"
                 ],
-                steps: [
-                    "Preheat the oven to 475°F (245°C).",
-                    "Roll out the pizza dough and spread tomato sauce evenly.",
-                    "Top with slices of fresh mozzarella and fresh basil leaves.",
-                    "Drizzle with olive oil and season with salt and pepper.",
-                    "Bake in the preheated oven for 12-15 minutes or until the crust is golden brown.",
-                    "Slice and serve hot."
+                "steps": [
+                    "Preheat a heavy-bottomed skillet on HIGH for 30 seconds. Add oil/ghee and immediately reduce flame to MEDIUM.",
+                    "Add cumin seeds and let them sizzle on MEDIUM for 8–12 seconds.",
+                    "Add chopped onions + pinch of salt. Sauté on MEDIUM for 7–9 minutes until light golden.",
+                    "Add ginger paste, garlic paste, and slit chili. Sauté on MEDIUM for 40–50 seconds.",
+                    "Add tomato puree. Briefly raise heat to MEDIUM-HIGH for 10–15 seconds, then reduce to MEDIUM-LOW.",
+                    "Add turmeric, red chili powder, coriander powder, cumin powder (optional), and salt. Cook the masala on MEDIUM-LOW for 6–8 minutes until oil separates.",
+                    "Add 150 ml water and bring to a gentle simmer on MEDIUM. Add peas and cook: fresh peas 6–7 min; frozen peas 4–5 min.",
+                    "In a separate pan, heat 1 tbsp oil/ghee on MEDIUM-HIGH. Fry paneer 1.5–2 minutes per side until lightly golden (total 3–4 min). Remove to a plate.",
+                    "Add fried paneer to the gravy. Simmer on LOW for 3–4 minutes so flavors absorb.",
+                    "Add cream or whisked yogurt (optional). Mix gently on LOW.",
+                    "Finish with garam masala and crushed kasuri methi. Turn off heat.",
+                    "Cover and rest for 2 minutes, then garnish with cilantro and lemon."
                 ],
-                prepTime: 20,
-                cookTime: 15,
-                totalTime: 35,
-                difficulty: "Easy",
-                imageURL: "https://cdn.dummyjson.com/recipe-images/1.webp",
-                createdAt: new Date().toISOString()
+                "prepTime": 12,
+                "cookTime": 25,
+                "totalTime": 37,
+                "difficulty": "Medium",
+                "imageURL": "https://as2.ftcdn.net/v2/jpg/16/37/20/21/1000_F_1637202132_42Cqd3y6LoamOtQ98bTzzxNuYzKFDzgm.jpg",
+                "createdAt": new Date().toISOString()
             },
             {
                 id: (Date.now() + 1).toString(),
@@ -307,6 +327,33 @@ export function initializeRecipes() {
                 totalTime: 35,
                 difficulty: "Medium",
                 imageURL: "https://cdn.dummyjson.com/recipe-images/10.webp",
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: (Date.now() + 10).toString(),
+                title: "Classic Margherita Pizza",
+                description: "A simple and delicious Italian pizza with fresh mozzarella and basil.",
+                ingredients: [
+                    "Pizza dough",
+                    "Tomato sauce",
+                    "Fresh mozzarella cheese",
+                    "Fresh basil leaves",
+                    "Olive oil",
+                    "Salt and pepper to taste"
+                ],
+                steps: [
+                    "Preheat the oven to 475°F (245°C).",
+                    "Roll out the pizza dough and spread tomato sauce evenly.",
+                    "Top with slices of fresh mozzarella and fresh basil leaves.",
+                    "Drizzle with olive oil and season with salt and pepper.",
+                    "Bake in the preheated oven for 12-15 minutes or until the crust is golden brown.",
+                    "Slice and serve hot."
+                ],
+                prepTime: 20,
+                cookTime: 15,
+                totalTime: 35,
+                difficulty: "Easy",
+                imageURL: "https://cdn.dummyjson.com/recipe-images/1.webp",
                 createdAt: new Date().toISOString()
             }
         ];
