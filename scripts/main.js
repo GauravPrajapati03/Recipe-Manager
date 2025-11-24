@@ -181,5 +181,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Back to Top button functionality
+const backToTopBtn = document.getElementById('backToTopBtn');
 
+window.addEventListener('scroll', function () {
+  // console.log(Math.floor(window.scrollY));
+  if (window.scrollY > 300) {
+    backToTopBtn.classList.remove('hidebtn');
+  } else {
+    backToTopBtn.classList.add('hidebtn');
+  }
+});
+
+backToTopBtn.addEventListener('click', function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+  
 });

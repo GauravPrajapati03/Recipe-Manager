@@ -31,7 +31,7 @@ function createRecipeCard(recipe, onView) {
   card.className = "recipe-card";
   card.setAttribute("tabindex", "0");
   card.innerHTML = `
-    <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-card-image" loading="lazy" />
+    <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-card-image" />
     <div class="recipe-card-content">
       <h3 class="recipe-card-title">${recipe.title}</h3>
       <p class="recipe-card-description">${recipe.description}</p>
@@ -245,7 +245,7 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
     <div class="modal-overlay" role="dialog" aria-modal="true">
       <div class="recipe-detail">
         <i class="ri-close-large-line close-detail"></i>
-        <img src="${recipe.imageURL || ''}" alt="Image of ${recipe.title}" class="recipe-detail-image" loading="lazy" />
+        <img src="${recipe.imageURL || ''}" alt="Image of ${recipe.title}" class="recipe-detail-image" />
 
         <h2>${recipe.title}</h2>
         <p class="recipe-detail-desc">${recipe.description}</p>
@@ -376,6 +376,7 @@ export function renderEditRecipeForm(recipe, onsubmit) {
           <option value="Hard" ${recipe.difficulty === "Hard" ? "selected" : ""}>Hard</option>
         </select></label>
         <label>Image URL <input type="text" name="imageURL" value="${recipe.imageURL || ''}" /></label>
+        
         <div class="form-actions">
           <button type="submit">Save</button>
           <button type="button" id="cancelEditBtn">Cancel</button>
