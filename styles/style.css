@@ -498,6 +498,43 @@ main {
 }
 
 
+
+.recipe-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  font-size: 1.03em;
+  margin-bottom: 0.5em;
+}
+.recipe-detail-tags {
+  margin-bottom: 0.8em;
+}
+.tag {
+  display: inline-block;
+  background: #ffe0b2;
+  color: #f7a650;
+  padding: 3px 10px;
+  border-radius: 15px;
+  margin-right: 0.4em;
+  font-size: 0.93em;
+}
+.recipe-notes {
+  background: #faf7ea;
+  border-radius: 7px;
+  padding: 0.6em 1em;
+  margin: 1em 0 0.8em 0;
+  color: #53432a;
+  font-size: 1em;
+}
+@media (max-width: 700px) {
+  .recipe-detail-meta {
+    flex-direction: column;
+    gap: 0.5em;
+    font-size: 1em;
+  }
+}
+
+
 /* Responsive */
 
 .add-recipe-header {

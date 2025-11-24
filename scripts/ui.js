@@ -81,6 +81,22 @@ export function renderAddRecipeForm(onSubmit) {
           <label for="steps">Steps* (enter each step on a new line)
           <textarea id="steps" name="steps" placeholder="recipe steps" rows="5" required></textarea>
           </label>
+
+          <label for="servings">Servings*
+          <input type="number" id="servings" name="servings" min="1" placeholder="e.g. 4" required>
+          </label>
+
+          <label for="cuisine">Cuisine
+            <input type="text" id="cuisine" name="cuisine" placeholder="e.g. Italian, Indian">
+          </label>
+
+          <label for="tags">Tags (comma separated)
+            <input type="text" id="tags" name="tags" placeholder="e.g. Vegetarian, Curry">
+          </label>
+          
+          <label for="notes">Notes
+            <textarea id="notes" name="notes" rows="2" placeholder="e.g. Use fresh herbs for best flavor"></textarea>
+          </label>
           
           <div class="time-inputs">
             <label for="prepTime">Prep Time (in minutes)*
@@ -148,15 +164,19 @@ export function renderAddRecipeForm(onSubmit) {
     clearErrors();
     const formData = {
       id: Date.now().toString(),
-      title: document.getElementById('title').value,
-      description: document.getElementById('description').value,
-      ingredients: document.getElementById('ingredients').value,
-      steps: document.getElementById('steps').value,
-      prepTime: document.getElementById('prepTime').value,
-      cookTime: document.getElementById('cookTime').value,
-      totalTime: document.getElementById('totalTime').value,
+      title: document.getElementById('title').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      ingredients: document.getElementById('ingredients').value.trim(),
+      steps: document.getElementById('steps').value.trim(),
+      servings: Number(document.getElementById('servings').value),
+      cuisine: document.getElementById('cuisine').value.trim(),
+      tags: document.getElementById('tags').value.trim(),
+      notes: document.getElementById('notes').value.trim(),
+      prepTime: Number(document.getElementById('prepTime').value),
+      cookTime: Number(document.getElementById('cookTime').value),
+      totalTime: Number(document.getElementById('totalTime').value),
       difficulty: document.getElementById('difficulty').value,
-      imageURL: document.getElementById('imageURL').value
+      imageURL: document.getElementById('imageURL').value.trim()
     };
 
     const errors = validateRecipeForm(formData);
@@ -225,14 +245,19 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
     <div class="modal-overlay" role="dialog" aria-modal="true">
       <div class="recipe-detail">
         <i class="ri-close-large-line close-detail"></i>
-        <img src="${recipe.imageURL || "https://via.placeholder.com/150"}" alt="Image of ${recipe.title}" class="recipe-detail-image" loading="lazy" />
+        <img src="${recipe.imageURL || ''}" alt="Image of ${recipe.title}" class="recipe-detail-image" loading="lazy" />
+
         <h2>${recipe.title}</h2>
         <p class="recipe-detail-desc">${recipe.description}</p>
+
         <div class="recipe-detail-meta">
-          <span><b>Difficulty:</b> ${recipe.difficulty}</span>
-          <span><b>Prep Time:</b> ${recipe.prepTime} min</span>
-          <span><b>Cook Time:</b> ${recipe.cookTime} min</span>
-          <span><b>Total Time:</b> ${recipe.totalTime} min</span>
+          <span><b>Servings:</b> ${recipe.servings ?? '-'}</span>
+          <span><b>Total Time:</b> ${recipe.totalTime ?? '-'} min</span>
+          <span><b>Difficulty:</b> ${recipe.difficulty ?? '-'}</span>
+          <span><b>Cuisine:</b> ${recipe.cuisine ?? '-'}</span>
+        </div>
+        <div class="recipe-detail-tags">
+          ${Array.isArray(recipe.tags) && recipe.tags.length ? recipe.tags.map(tag => `<span class="tag">${tag}</span>`).join(' ') : ''}
         </div>
         <div>
           <h3 class="section-title">Ingredients</h3>
@@ -243,6 +268,7 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
           <ol class="recipe-detail-steps">
             ${(Array.isArray(recipe.steps) ? recipe.steps : String(recipe.steps).split('\n')).map(s => `<li>${s}</li>`).join('')}
           </ol>
+          ${recipe.notes ? `<div class="recipe-notes"><h3>Notes</h3><p>${recipe.notes}</p></div>` : ''}
         </div>
         <div class="recipe-detail-actions">
           <button id="editRecipeBtn">Edit</button>
@@ -327,6 +353,23 @@ export function renderEditRecipeForm(recipe, onsubmit) {
           <label>Cook Time* <input type="number" name="cookTime" min="0" required value="${recipe.cookTime}" /></label>
           <label>Total Time* <input type="number" name="totalTime" min="0" required value="${recipe.totalTime}" /></label>
         </div>
+
+        <label for="servings">Servings*
+        <input type="number" id="servings" name="servings" min="1" required value="${recipe.servings || ''}" />
+        </label>
+
+        <label for="cuisine">Cuisine
+          <input type="text" id="cuisine" name="cuisine" value="${recipe.cuisine || ''}" />
+        </label>
+
+        <label for="tags">Tags (comma separated)
+          <input type="text" id="tags" name="tags" value="${Array.isArray(recipe.tags) ? recipe.tags.join(', ') : ''}" />
+        </label>
+
+        <label for="notes">Notes
+          <textarea id="notes" name="notes">${recipe.notes || ''}</textarea>
+        </label>
+
         <label>Difficulty* <select name="difficulty" required>
           <option value="Easy" ${recipe.difficulty === "Easy" ? "selected" : ""}>Easy</option>
           <option value="Medium" ${recipe.difficulty === "Medium" ? "selected" : ""}>Medium</option>
@@ -370,17 +413,23 @@ export function renderEditRecipeForm(recipe, onsubmit) {
     clearEditErrors();
 
     const formData = new FormData(form);
+    
     const updatedRecipe = {
       ...recipe,
-      title: formData.get('title'),
-      description: formData.get('description'),
-      ingredients: formData.get('ingredients'),
-      steps: formData.get('steps'),
-      prepTime: formData.get('prepTime'),
-      cookTime: formData.get('cookTime'),
-      totalTime: formData.get('totalTime'),
+      title: formData.get('title').trim(),
+      description: formData.get('description').trim(),
+      ingredients: formData.get('ingredients').trim(),
+      steps: formData.get('steps').trim(),
+      servings: Number(formData.get('servings')),
+      cuisine: formData.get('cuisine').trim(),
+      tags: formData.get('tags').split(',').map(s => s.trim()).filter(Boolean),
+      notes: formData.get('notes').trim(),
+      prepTime: Number(formData.get('prepTime')),
+      cookTime: Number(formData.get('cookTime')),
+      totalTime: Number(formData.get('totalTime')),
       difficulty: formData.get('difficulty'),
-      imageURL: formData.get('imageURL')
+      imageURL: formData.get('imageURL').trim(),
+      updatedAt: new Date().toISOString()
     };
 
     // Validate before submitting
