@@ -125,7 +125,10 @@ export function renderAddRecipeForm(onSubmit) {
           </label>
           
           <div class="form-actions">
-              <button type="submit" id="addRecipeBtn">Add Recipe</button>
+              <button type="submit" id="addRecipeBtn">
+                <i class="ri-add-large-line"></i>
+                Add Recipe
+              </button>
               <button type="button" id="cancelBtn">Cancel</button>
           </div>
 
@@ -271,9 +274,18 @@ export function renderRecipeDetail(recipe, { onEdit, onDelete, onClose }) {
           ${recipe.notes ? `<div class="recipe-notes"><h3>Notes</h3><p>${recipe.notes}</p></div>` : ''}
         </div>
         <div class="recipe-detail-actions">
-          <button id="editRecipeBtn">Edit</button>
-          <button id="deleteRecipeBtn">Delete</button>
-          <button id="closeDetailBtn">Close</button>
+          <button id="editRecipeBtn">
+            <i class="ri-pencil-line"></i>
+            Edit
+          </button>
+          <button id="deleteRecipeBtn">
+            <i class="ri-delete-bin-fill"></i>  
+            Delete
+          </button>
+          <button id="closeDetailBtn">
+            <i class="ri-close-circle-line"></i>
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -378,7 +390,10 @@ export function renderEditRecipeForm(recipe, onsubmit) {
         <label>Image URL <input type="text" name="imageURL" value="${recipe.imageURL || ''}" /></label>
         
         <div class="form-actions">
-          <button type="submit">Save</button>
+          <button type="submit">
+            <i class="ri-save-line"></i>
+            Save
+          </button>
           <button type="button" id="cancelEditBtn">Cancel</button>
         </div>
       </form>
