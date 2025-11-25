@@ -13,15 +13,44 @@ The **Recipe Manager App** is a simple project designed to help users store, org
 
 ---
 
-## 🧭 Overview
+## 🧭 Project Overview
+
+The goal of this application is to provide a clean and intuitive way to manage recipes. Planned features include:
 
 - ➕ Adding new recipes  
-- 📂 Viewing saved recipes  
+- 📂 Viewing saved recipes  in a grid layout (Home page) with recipe cards
+- 🪟 See detailed recipe information with full ingredients, steps, optional image and additional information.
 - 🔎 Searching for recipes  
-- 🏷️ Filtering recipes based on difficulty  
-- ✏️ Editing and deleting existing recipes  
+- 🏷️ Filtering recipes based on difficulty and Time Required
+- ✏️ Editing and deleting existing recipes via a form
+- 📱 Responsive design ensures usability on desktop and mobile devices.
+- 📈 Persist recipe data entirely on the client using localStorage (no backend needed).
 
 This README will be expanded as the project evolves.
+
+---
+
+## 🖼️ Screenshots
+
+#### 👉 Homepage (Desktop) View
+<p align="center">
+  <img src="./assets/screenshot/homepage.png" width="70%">
+</p>
+
+#### 👉 View Recipe Detail
+<p align="center">
+  <img src="./assets/screenshot/viewRecipeDetail.png" width="70%">
+</p>
+
+#### 👉 Add Recipe Form
+<p align="center">
+  <img src="./assets/screenshot/addRecipeForm.png" width="70%">
+</p>
+
+#### 👉Responsive (Mobile) View
+<p align="center">
+  <img src="./assets/screenshot/mobileview.png" width="70%">
+</p>
 
 ---
 
@@ -32,13 +61,7 @@ This README will be expanded as the project evolves.
 - Responsive design: Looks and works great on desktop, tablet, and mobile screens.
 - LocalStorage persistence: All data is stored in your browser and preserved on reload.
 - Accessibly designed: Keyboard-friendly, labels included, and clear error messages.
-
----
-
-## 🛠 Development
-- App uses vanilla **JS, HTML, and CSS**.
-- Starter recipes are kept in a separate JS file, imported at runtime.
-- All localStorage logic is handled in its own module.
+- Back To Top button implemented on homepage
 
 ---
 
@@ -333,6 +356,18 @@ Each recipe must follow these validation requirements:
 
 ---
 
+
+## 🛠 Development
+- App uses:
+    - vanilla **JS**
+    - **HTML**
+    - **CSS**
+    - **localStorage**
+- Starter recipes are kept in a separate JS file, imported at runtime.
+- All localStorage logic is handled in its own module.
+
+---
+
 ## 🛠️ Assumptions & Limitations
 
 - Data persists only in the browser's localStorage — clearing cache will reset recipes.
@@ -351,6 +386,13 @@ Each recipe must follow these validation requirements:
 - Accessibility improvements can be enhanced further.
 - Persisting data remotely or syncing across devices is not supported.
 
+---
+
+## Future Enhancements
+- **List upcoming features:**
+  - favorites
+  - ratings
+  - dark theme toggle
 
 ---
 ### 📃 License & Credits
