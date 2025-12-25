@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Manager App</title>
+    <!-- Immediate theme loader to prevent flash of incorrect theme -->
+    <script>
+      (function() {
+        try {
+          const theme = localStorage.getItem('theme');
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {
+          // ignore errors
+        }
+      })();
+    </script>
     <!-- CSS -->
     <link rel="stylesheet" href="styles/style.css">
 
@@ -12,7 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="">
     <!-- Header -->
     <header class="glass-header">
         <button class="nav-toggle" aria-label="Toggle menu">
@@ -39,8 +50,12 @@
                 </select>
             </div>
         </nav>
-        <button type="button" id="btnAddRecipe" class="add-recipe-header" aria-label="Add Recipe Button">Add
-            Recipe</button>
+        <div class="header-actions">
+          <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme" aria-pressed="false" title="Toggle theme">
+            <i class="ri-moon-line theme-icon" aria-hidden="true"></i>
+          </button>
+          <button type="button" id="btnAddRecipe" class="add-recipe-header" aria-label="Add Recipe Button">Add Recipe</button>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -54,6 +69,7 @@
     <button aria-label="Back to top" id="backToTopBtn" class="hidebtn" title="Go to top">↑</button>
 
     <!-- Scripts -->
+    <script src="scripts/theme.js" type="module"></script>
     <script src="scripts/main.js" type="module"></script>
     <script src="scripts/storage.js" type="module"></script>
     <script src="scripts/ui.js" type="module"></script>

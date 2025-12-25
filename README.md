@@ -62,6 +62,7 @@ This README will be expanded as the project evolves.
 - LocalStorage persistence: All data is stored in your browser and preserved on reload.
 - Accessibly designed: Keyboard-friendly, labels included, and clear error messages.
 - Back To Top button implemented on homepage
+- Light/Dark mode toggle for better user experience
 
 ---
 
